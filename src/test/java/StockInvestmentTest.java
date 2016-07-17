@@ -10,15 +10,44 @@ import java.util.Date;
 
 import static org.testng.AssertJUnit.assertEquals;
 
-/**
- *
+/*
+using ByteArrayOutputStream and System.setXXX is simple:
+
+private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+private final ByteArrayOutputStream errContent = new ByteArrayOutputStream();
+
+@Before
+public void setUpStreams() {
+    System.setOut(new PrintStream(outContent));
+    System.setErr(new PrintStream(errContent));
+}
+
+@After
+public void cleanUpStreams() {
+    System.setOut(null);
+    System.setErr(null);
+}
+sample test cases:
+
+@Test
+public void out() {
+    System.out.print("hello");
+    assertEquals("hello", outContent.toString());
+}
+
+@Test
+public void err() {
+    System.err.print("hello again");
+    assertEquals("hello again", errContent.toString());
+}
+I used this code to test the command line option (asserting that -version outputs the version string, etc etc)
  */
+
 public class StockInvestmentTest
 {
-    @Test
-    public static void whenCorrectInputThenNoExceptionIsThrown() throws Exception
+    @Test(dataProvider = "ValidInput", dataProviderClass = InputTest.class)
+    public static void whenCorrectInputThenNoExceptionIsThrown( String[] input ) throws Exception
     {
-        String[] input = { "VEST", "001B", "20120101", "1000", "0.45" };
         StockInvestment stockInvestment = new StockInvestment( input );
     }
 
@@ -50,11 +79,9 @@ public class StockInvestmentTest
         StockInvestment stockInvestment = new StockInvestment( input1 );
     }
 
-    @Test
-    public static void whenMarketDateIsEqualToGrantDateThenOutputIs500() throws Exception
+    @Test(dataProvider = "ValidInput003B", dataProviderClass = InputTest.class)
+    public static void whenMarketDateIsEqualToGrantDateThenOutputIs500( String[] input ) throws Exception
     {
-        String[] input = { "VEST", "003B", "20130101", "1000", "0.50" };
-
         StockInvestment stockInvestment = new StockInvestment( input );
 
         SimpleDateFormat dateFormatter = new SimpleDateFormat( "YYYYMMdd" );
@@ -64,11 +91,9 @@ public class StockInvestmentTest
         assertEquals( 500.0, stockInvestment.calculateCashGain( marketDate, marketPrice ) );
     }
 
-    @Test
-    public static void whenMarketDateIsAfterGrantDateThenOutputIs500() throws Exception
+    @Test(dataProvider = "ValidInput003B", dataProviderClass = InputTest.class)
+    public static void whenMarketDateIsAfterGrantDateThenOutputIs500( String[] input ) throws Exception
     {
-        String[] input = { "VEST", "003B", "20130101", "1000", "0.50" };
-
         StockInvestment stockInvestment = new StockInvestment( input );
 
         SimpleDateFormat dateFormatter = new SimpleDateFormat( "YYYYMMdd" );
@@ -78,11 +103,9 @@ public class StockInvestmentTest
         assertEquals( 500.0, stockInvestment.calculateCashGain( marketDate, marketPrice ) );
     }
 
-    @Test
-    public static void whenMarketDateIsBeforeGrantDateThenOutputIs0() throws Exception
+    @Test(dataProvider = "ValidInput003B", dataProviderClass = InputTest.class)
+    public static void whenMarketDateIsBeforeGrantDateThenOutputIs0( String[] input ) throws Exception
     {
-        String[] input = { "VEST", "003B", "20130101", "1000", "0.50" };
-
         StockInvestment stockInvestment = new StockInvestment( input );
 
         SimpleDateFormat dateFormatter = new SimpleDateFormat( "YYYYMMdd" );

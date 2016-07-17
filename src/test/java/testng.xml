@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite name="SoliumTestSuite" parallel="true">
+    <test name="InputTest">
+        <classes>
+            <class name="InputTest"/>
+        </classes>
+    </test>
+    <test name="OutputTest">
+        <classes>
+            <class name="com.javacodegeeks.testng.TestClass2"/>
+            <class name="com.javacodegeeks.testng.TestClass3"/>
+        </classes>
+    </test>
+    <test name="StockInvestmentTest">
+        <classes>
+            <class name="StockInvestmentTest"/>
+        </classes>
+    </test>
+    <test name="EmployeeTest">
+        <classes>
+            <class name="com.javacodegeeks.testng.TestClass1"/>
+        </classes>
+    </test>
+    <test name="EmployeesTest">
+        <classes>
+            <class name="com.javacodegeeks.testng.TestClass1"/>
+        </classes>
+    </test>
+</suite>
