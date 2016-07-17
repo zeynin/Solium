@@ -6,11 +6,20 @@ import org.testng.annotations.DataProvider;
 public class InputTest
 {
     private static String[] input = {"VEST", "001B", "20120101", "1000", "0.45"};
+    public final int inputLength = input.length;
 
     @DataProvider( name = "ValidInput" )
     public static Object[][] ValidInput()
     {
         return new Object[][] { { input }, };
+    }
+
+    //@DataProvider( name = "InvalidInput" )
+    public String[] InvalidInput( int index )
+    {
+        String[] invalidInput = input.clone();
+        invalidInput[index] = "";
+        return invalidInput;
     }
 
     @DataProvider( name = "ValidInput003B" )
