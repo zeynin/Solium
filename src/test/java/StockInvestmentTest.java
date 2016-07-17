@@ -17,25 +17,33 @@ public class StockInvestmentTest
         String[] input = { "VEST", "001B", "20120101", "1000", "0.45" };
         StockInvestment stockInvestment = new StockInvestment( input );
     }
-/* handles exception gracefully
-    @org.testng.annotations.Test(expectedExceptions = NumberFormatException.class)
-    public static void whenEmptyInputThenExceptionIsThrown() throws NumberFormatException
+
+    @org.testng.annotations.Test
+    public static void whenEmptyGrantPriceThenNoExceptionIsThrown() throws Exception
     {
         String[] input1 = { "VEST", "001B", "20120101", "1000", "" };
         StockInvestment stockInvestment = new StockInvestment( input1 );
     }
-*/
-    @org.testng.annotations.Test(expectedExceptions = ParseException.class)
-    public static void whenEmptyInputThenThrowsException() throws Exception
+
+    @org.testng.annotations.Test
+    public static void whenEmptyGrantDateThenNoExceptionIsThrown() throws Exception
     {
         String[] input1 = { "VEST", "001B", "", "1000", "0.45" };
         StockInvestment stockInvestment = new StockInvestment( input1 );
+    }
 
-        SimpleDateFormat dateFormatter = new SimpleDateFormat( "YYYYMMDD" );
-        Date marketDate = dateFormatter.parse( "20130101" );
-        double marketPrice = 1.00;
+    @org.testng.annotations.Test
+    public static void whenEmptyEmployeeThenNoExceptionIsThrown() throws Exception
+    {
+        String[] input1 = { "VEST", "", "20120101", "1000", "0.45" };
+        StockInvestment stockInvestment = new StockInvestment( input1 );
+    }
 
-        System.out.println( stockInvestment.calculateCashGain( marketDate, marketPrice ) );
+    @org.testng.annotations.Test
+    public static void whenEmptyFieldThenNoExceptionIsThrown() throws Exception
+    {
+        String[] input1 = { "", "003B", "20120101", "1000", "0.45" };
+        StockInvestment stockInvestment = new StockInvestment( input1 );
     }
 
     @org.testng.annotations.Test
@@ -45,7 +53,7 @@ public class StockInvestmentTest
 
         StockInvestment stockInvestment = new StockInvestment( input );
 
-        SimpleDateFormat dateFormatter = new SimpleDateFormat( "YYYYMMDD" );
+        SimpleDateFormat dateFormatter = new SimpleDateFormat( "YYYYMMdd" );
         Date marketDate = dateFormatter.parse( "20130101" );
         double marketPrice = 1.00;
 
@@ -59,7 +67,7 @@ public class StockInvestmentTest
 
         StockInvestment stockInvestment = new StockInvestment( input );
 
-        SimpleDateFormat dateFormatter = new SimpleDateFormat( "YYYYMMDD" );
+        SimpleDateFormat dateFormatter = new SimpleDateFormat( "YYYYMMdd" );
         Date marketDate = dateFormatter.parse( "20140101" );
         double marketPrice = 1.00;
 
@@ -73,7 +81,7 @@ public class StockInvestmentTest
 
         StockInvestment stockInvestment = new StockInvestment( input );
 
-        SimpleDateFormat dateFormatter = new SimpleDateFormat( "YYYYMMDD" );
+        SimpleDateFormat dateFormatter = new SimpleDateFormat( "YYYYMMdd" );
         Date marketDate = dateFormatter.parse( "20120101" );
         double marketPrice = 1.00;
 
@@ -87,7 +95,7 @@ public class StockInvestmentTest
 
         StockInvestment stockInvestment = new StockInvestment( input );
 
-        SimpleDateFormat dateFormatter = new SimpleDateFormat( "YYYYMMDD" );
+        SimpleDateFormat dateFormatter = new SimpleDateFormat( "YYYYMMdd" );
         Date marketDate = dateFormatter.parse( "20120101" );
         double marketPrice = 1.00;
 
@@ -101,8 +109,36 @@ public class StockInvestmentTest
 
         StockInvestment stockInvestment = new StockInvestment( input );
 
-        SimpleDateFormat dateFormatter = new SimpleDateFormat( "YYYYMMDD" );
+        SimpleDateFormat dateFormatter = new SimpleDateFormat( "YYYYMMdd" );
         Date marketDate = dateFormatter.parse( "20140101" );
+        double marketPrice = 1.00;
+
+        System.out.println( stockInvestment.calculateCashGain( marketDate, marketPrice ) );
+    }
+
+    @org.testng.annotations.Test
+    public static void whenFirstFieldDoesNotExistThenOutputIs0() throws Exception
+    {
+        String[] input = { "vestr", "003B", "20130101", "1000", "0.50" };
+
+        StockInvestment stockInvestment = new StockInvestment( input );
+
+        SimpleDateFormat dateFormatter = new SimpleDateFormat( "YYYYMMdd" );
+        Date marketDate = dateFormatter.parse( "20140101" );
+        double marketPrice = 1.00;
+
+        System.out.println( stockInvestment.calculateCashGain( marketDate, marketPrice ) );
+    }
+
+    @org.testng.annotations.Test
+    public static void whenDefaultsUsedThenOutputIs0() throws Exception
+    {
+        String[] input = { "vest", "003B", "", "1000", "0.50" };
+
+        StockInvestment stockInvestment = new StockInvestment( input );
+
+        SimpleDateFormat dateFormatter = new SimpleDateFormat( "YYYYMMdd" );
+        Date marketDate = dateFormatter.parse( "20170101" );
         double marketPrice = 1.00;
 
         System.out.println( stockInvestment.calculateCashGain( marketDate, marketPrice ) );
