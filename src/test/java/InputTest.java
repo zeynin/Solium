@@ -1,4 +1,8 @@
 import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
+
+import java.io.FileInputStream;
+import java.io.InputStream;
 
 /**
  * Created by Zeynin on 2016-07-17.
@@ -14,11 +18,17 @@ public class InputTest
         return new Object[][] { { input }, };
     }
 
-    //@DataProvider( name = "InvalidInput" )
-    public String[] InvalidInput( int index )
+    public static String[] InvalidInput( int index )
     {
         String[] invalidInput = input.clone();
         invalidInput[index] = "";
+        return invalidInput;
+    }
+
+    public String[] NegativeInvalidInput( int index )
+    {
+        String[] invalidInput = input.clone();
+        invalidInput[index] = "-" + invalidInput[index];
         return invalidInput;
     }
 
@@ -28,5 +38,40 @@ public class InputTest
         String[] input1 = {"VEST", "003B", "20130101", "1000", "0.50" };
 
         return new Object[][] { { input1 }, };
+    }
+
+    @Test
+    public void testInput() throws Exception
+    {
+        InputStream stdin = null;
+        try
+        {
+            stdin = System.in;
+            //Give the file path
+            FileInputStream stream = new FileInputStream( "input.def" );
+            System.setIn( stream );
+            HandleInput handleInput = new HandleInput();
+            String[][] result = handleInput.getInput();
+            String[] marketInfo = handleInput.getMarketData();
+
+            for (String[] row : result)
+            {
+                for( String field : row )
+                    System.out.print( field + " " );
+
+                System.out.println();
+            }
+
+            for (String s : marketInfo)
+                System.out.print( s + " " );
+
+            stream.close();
+        }
+        finally
+        {
+            //Reset System instream
+            System.setIn( stdin );
+        }
+
     }
 }

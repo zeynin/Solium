@@ -17,7 +17,7 @@ public class StockInvestment
     {
         // Constructor. Initialize multiplier here, as well as fields
         // What happens if a string is empty? Enter default values
-        employeeId = "empty";
+        employeeId = "";
         SimpleDateFormat date = new SimpleDateFormat( "YYYYMMdd" );
         grantDate = date.format( new Date() );
         shares = 0;
@@ -27,12 +27,18 @@ public class StockInvestment
         if( field.equals( "VEST" ) )
         {
             if( record[1].isEmpty() ) return;
-            employeeId = record[1];
-
             if( record[2].isEmpty() ) return;
+
+            int employeeShares = NumberUtils.toInt( record[3], 0 );
+            double price = NumberUtils.toDouble( record[4], 0.0 );
+
+            if( employeeShares < 0 ) return;
+            if( price < 0 ) return;
+
+            employeeId = record[1];
             grantDate = record[2];
-            shares = NumberUtils.toInt( record[3], 0 );
-            grantPrice = NumberUtils.toDouble( record[4], 0.0 );
+            shares = employeeShares;
+            grantPrice = price;
         }
     }
 
