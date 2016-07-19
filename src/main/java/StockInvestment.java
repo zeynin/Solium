@@ -1,5 +1,7 @@
 import org.apache.commons.lang3.math.NumberUtils;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -26,13 +28,15 @@ public class StockInvestment
         public int getIndex() { return index; }
     }
 
-    private String directive;
-    private String grantDate;
-    private int shares;
-    private double grantPrice;
+    private String directive = "";
+    private String grantDate = "";
+    private int shares = 0;
+    private double grantPrice = 0.0;
+    private double totalCashGain = 0.0;
 
     public StockInvestment( String[] record )
     {
+        super();
         // Constructor. Initialize multiplier here, as well as fields
         // What happens if a string is empty? Enter default values
         SimpleDateFormat date = new SimpleDateFormat( "YYYYMMdd" );
@@ -68,7 +72,16 @@ public class StockInvestment
         // Verify shares were granted before the market date
         if( dateFormat.parse( grantDate ).compareTo( marketDate ) > 0 ) return 0.0;
 
-        double holdings = shares * ( marketPrice - grantPrice );
-        return holdings;
+        totalCashGain = shares * ( marketPrice - grantPrice );
+        return totalCashGain;
+    }
+
+    @Override
+    public String toString()
+    {
+        DecimalFormat df2 = new DecimalFormat("0.00");
+        df2.setRoundingMode( RoundingMode.HALF_UP );
+
+        return df2.format( totalCashGain );
     }
 }

@@ -18,6 +18,8 @@ public class InputTest
             {"VEST","001B","20130101","1500","0.50"},
             {"VEST","003B","20130101","1000","0.50"}
             };
+    private static String[] marketData = { "20140101" , "1.00" };
+    private static String[] marketData2 = { "20120615", "1.00" };
 
     @DataProvider( name = "ValidInput" )
     public static Object[][] ValidInput()
@@ -27,6 +29,21 @@ public class InputTest
 
     @DataProvider( name = "ValidRows" )
     public static Object[][] ValidRows() { return new Object[][] { { rows } }; }
+    //{
+    //    HandleInput handleInput = new HandleInput();
+    //    return new Object[][] { { handleInput.getInput() } };
+    //}
+
+    //@DataProvider( name = "ValidMarketData" )
+    public String[] ValidMarketData()
+    {
+        return marketData;
+    }
+
+    public String[] ValidMarketData2()
+    {
+        return marketData2;
+    }
 
     public String[] InvalidInput( int index )
     {

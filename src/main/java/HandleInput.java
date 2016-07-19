@@ -24,6 +24,8 @@ public class HandleInput
 
     public HandleInput()
     {
+        super();
+
         try
         {
             BufferedReader br = new BufferedReader( new InputStreamReader( System.in ) );

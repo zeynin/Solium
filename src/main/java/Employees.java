@@ -1,4 +1,3 @@
-import java.util.Set;
 import java.util.TreeMap;
 
 /**
@@ -9,8 +8,9 @@ public class Employees
     //private Employee[] employees;
     TreeMap<String, Employee> employees;
 
-    public Employees( String[][] input )
+    public Employees( String[][] input/*, String[] marketData*/ ) throws Exception
     {
+        super();
         employees = new TreeMap<String, Employee>();
         String employeeId;
 
@@ -23,10 +23,13 @@ public class Employees
                 // Add the stock to the employee
                 Employee employee = employees.get( employeeId );
                 employee.addStock( row );
+                //employee.calculateEmployeeCashGain( marketData );
             }
             else
             {
-                employees.put( employeeId, new Employee( row ) );
+                Employee employee = new Employee( row );
+                employees.put( employeeId, employee );
+                //employee.calculateEmployeeCashGain( marketData );
             }
 
             //for( String field : row )
@@ -41,14 +44,26 @@ public class Employees
         return employees;
     }
 
-    //@Override
-    //public String toString() {
-    //    return firstName + " " + lastName + " " + salary;
-    //}
-
-    public void outputEmployees()
+    //public void outputEmployees()
+    @Override
+    public String toString()
     {
-        Set mapset = employees.entrySet();
-        System.out.println( mapset );
+        String s = "";
+
+        for( Employee employee : employees.values() )
+        {
+            //System.out.println( employee );
+            s += employee + "\n";
+        }
+
+        return s;
+    }
+
+    public void calculateTotalGain( String[] marketData ) throws Exception
+    {
+        for( Employee employee : employees.values() )
+        {
+            employee.calculateEmployeeCashGain( marketData );
+        }
     }
 }
