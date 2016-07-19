@@ -12,3 +12,11 @@ repositories {
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.11'
 }
+repositories {
+    jcenter()
+}
+
+dependencies {
+    testCompile 'org.testng:testng:6.9.12'
+    testCompile 'org.apache.commons:commons-lang3:3.4'
+}

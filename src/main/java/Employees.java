@@ -8,7 +8,7 @@ public class Employees
     //private Employee[] employees;
     TreeMap<String, Employee> employees;
 
-    public Employees( String[][] input/*, String[] marketData*/ ) throws Exception
+    public Employees( String[][] input ) throws Exception
     {
         super();
         employees = new TreeMap<String, Employee>();
@@ -23,19 +23,12 @@ public class Employees
                 // Add the stock to the employee
                 Employee employee = employees.get( employeeId );
                 employee.addStock( row );
-                //employee.calculateEmployeeCashGain( marketData );
             }
             else
             {
                 Employee employee = new Employee( row );
                 employees.put( employeeId, employee );
-                //employee.calculateEmployeeCashGain( marketData );
             }
-
-            //for( String field : row )
-            //    System.out.print( field + " " );
-
-            //System.out.println();
         }
     }
 
@@ -44,7 +37,6 @@ public class Employees
         return employees;
     }
 
-    //public void outputEmployees()
     @Override
     public String toString()
     {
@@ -52,7 +44,6 @@ public class Employees
 
         for( Employee employee : employees.values() )
         {
-            //System.out.println( employee );
             s += employee + "\n";
         }
 

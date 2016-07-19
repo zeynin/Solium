@@ -1,7 +1,6 @@
 import org.apache.commons.lang3.math.NumberUtils;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 
 /**
@@ -9,48 +8,41 @@ import java.io.InputStreamReader;
  */
 public class HandleInput
 {
-    private static String[][] input = null;
-    private static String[] marketData = null;
+    private static String[][] consoleInput = null;
+    private static String[] marketInput = null;
 
     public String[][] getInput()
     {
-        return input;
+        return consoleInput;
     }
 
     public String[] getMarketData()
     {
-        return marketData;
+        return marketInput;
     }
 
-    public HandleInput()
+    public HandleInput() throws Exception
     {
         super();
 
-        try
+        BufferedReader br = new BufferedReader( new InputStreamReader( System.in ) );
+        String line;
+
+        // The first line is the number of rows to expect
+        int rows = NumberUtils.toInt( br.readLine() );
+        consoleInput = new String[rows][];
+
+        for( int i = 0; i < rows; i++ )
         {
-            BufferedReader br = new BufferedReader( new InputStreamReader( System.in ) );
-            String line;
-
-            // The first line is the number of rows to expect
-            int rows = NumberUtils.toInt( br.readLine() );
-            input = new String[rows][];
-
-            for( int i = 0; i < rows; i++ )
-            {
-                input[i] = br.readLine().split( "," );
-            }
-
-            while( ( line = br.readLine() ) != null )
-            {
-                marketData = line.split( "," );
-            }
-
-            br.close();
+            consoleInput[i] = br.readLine().split( "," );
         }
-        catch( IOException e )
+
+        while( ( line = br.readLine() ) != null )
         {
-            // illegal System.out.println( "Exception: " + e );
+            marketInput = line.split( "," );
         }
+
+        br.close();
     }
 
 }

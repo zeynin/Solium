@@ -4,11 +4,15 @@ import org.testng.annotations.Test;
 import java.io.FileInputStream;
 import java.io.InputStream;
 
+import static org.testng.AssertJUnit.assertEquals;
+
 /**
  * Created by Zeynin on 2016-07-17.
  */
 public class InputTest
 {
+    private InputStream stdin = null;
+    private FileInputStream stream = null;
     private static String[] input = {"VEST", "001B", "20120101", "1000", "0.45"};
     public final int inputLength = input.length;
     private static String[][] rows = {
@@ -68,31 +72,29 @@ public class InputTest
     }
 
     @Test
-    public void testInput() throws Exception
+    public void whenInitializedThenReturnRows() throws Exception
     {
-        InputStream stdin = null;
+        boolean testInput = true;
+
         try
         {
-            stdin = System.in;
-            //Give the file path
-            FileInputStream stream = new FileInputStream( "input.def" );
-            System.setIn( stream );
+            InputTest test = new InputTest();
             HandleInput handleInput = new HandleInput();
-            String[][] result = handleInput.getInput();
-            String[] marketInfo = handleInput.getMarketData();
+            String[][] InputVerify = handleInput.getInput();
 
-            for (String[] row : result)
+            testInput &= ( InputVerify.length == rows.length );
+
+            for( int index = 0; index < InputVerify.length; index++ )
             {
-                for( String field : row )
-                    System.out.print( field + " " );
-
-                System.out.println();
+                // Iterate through each field
+                for( StockInvestment.Fields field: StockInvestment.Fields.values() )
+                {
+                    boolean b = rows[index][field.getIndex()].equals( InputVerify[index][field.getIndex()] );
+                    testInput &= b;
+                }
             }
 
-            for (String s : marketInfo)
-                System.out.print( s + " " );
-
-            stream.close();
+            //stream.close();
         }
         finally
         {
@@ -100,5 +102,46 @@ public class InputTest
             System.setIn( stdin );
         }
 
+        assertEquals( testInput, true );
+    }
+
+    @Test
+    public void whenConstructorCalledThenNoException() throws Exception
+    {
+        try
+        {
+            InputTest test = new InputTest();
+            HandleInput handleInput = new HandleInput();
+            String[][] result = handleInput.getInput();
+            String[] marketInfo = handleInput.getMarketData();
+
+            for( String[] row : result )
+            {
+                for( String field : row )
+                    System.out.print( field + " " );
+
+                System.out.println();
+            }
+
+            for( String s : marketInfo )
+                System.out.print( s + " " );
+
+            //stream.close();
+        }
+        finally
+        {
+            //Reset System instream
+            System.setIn( stdin );
+        }
+    }
+
+    public InputTest() throws Exception
+    {
+        stdin = System.in;
+        //Give the file path
+        if( stream == null )
+            stream = new FileInputStream( "input.def" );
+
+        System.setIn( stream );
     }
 }

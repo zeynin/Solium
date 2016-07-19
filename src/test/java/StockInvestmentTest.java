@@ -56,10 +56,10 @@ public class StockInvestmentTest
     {
         InputTest inputTest = new InputTest();
 
-        for( int i = 0; i < inputTest.inputLength; i++ )
+        for( StockInvestment.Fields i: StockInvestment.Fields.values() )
         {
             // Inputs each field as "".
-            StockInvestment stockInvestment = new StockInvestment( inputTest.InvalidInput( i ) );
+            StockInvestment stockInvestment = new StockInvestment( inputTest.InvalidInput( i.getIndex() ) );
         }
     }
 
@@ -68,10 +68,10 @@ public class StockInvestmentTest
     {
         InputTest inputTest = new InputTest();
 
-        for( int i = 0; i < inputTest.inputLength; i++ )
+        for( StockInvestment.Fields i: StockInvestment.Fields.values() )
         {
             // Any row with a negative number can be ignored
-            StockInvestment stockInvestment = new StockInvestment( inputTest.NegativeInvalidInput( i ) );
+            StockInvestment stockInvestment = new StockInvestment( inputTest.NegativeInvalidInput( i.getIndex() ) );
         }
     }
 
@@ -84,7 +84,7 @@ public class StockInvestmentTest
         Date marketDate = dateFormatter.parse( "20130101" );
         double marketPrice = 1.00;
 
-        assertEquals( 500.0, stockInvestment.calculateCashGain( marketDate, marketPrice ) );
+        assertEquals( 500.00, stockInvestment.calculateCashGain( marketDate, marketPrice ) );
     }
 
     @Test(dataProvider = "ValidInput003B", dataProviderClass = InputTest.class)
@@ -96,7 +96,7 @@ public class StockInvestmentTest
         Date marketDate = dateFormatter.parse( "20140101" );
         double marketPrice = 1.00;
 
-        assertEquals( 500.0, stockInvestment.calculateCashGain( marketDate, marketPrice ) );
+        assertEquals( 500.00, stockInvestment.calculateCashGain( marketDate, marketPrice ) );
     }
 
     @Test(dataProvider = "ValidInput003B", dataProviderClass = InputTest.class)
@@ -108,7 +108,7 @@ public class StockInvestmentTest
         Date marketDate = dateFormatter.parse( "20120101" );
         double marketPrice = 1.00;
 
-        assertEquals( 0.0, stockInvestment.calculateCashGain( marketDate, marketPrice ) );
+        assertEquals( 0.00, stockInvestment.calculateCashGain( marketDate, marketPrice ) );
     }
 
     @Test(expectedExceptions = ParseException.class)
@@ -122,7 +122,7 @@ public class StockInvestmentTest
         Date marketDate = dateFormatter.parse( "20120101" );
         double marketPrice = 1.00;
 
-        assertEquals( 0.0, stockInvestment.calculateCashGain( marketDate, marketPrice ) );
+        assertEquals( 0.00, stockInvestment.calculateCashGain( marketDate, marketPrice ) );
     }
 
     @Test
@@ -136,7 +136,7 @@ public class StockInvestmentTest
         Date marketDate = dateFormatter.parse( "20140101" );
         double marketPrice = 1.00;
 
-        assertEquals( 500.0, stockInvestment.calculateCashGain( marketDate, marketPrice ) );
+        assertEquals( 500.00, stockInvestment.calculateCashGain( marketDate, marketPrice ) );
     }
 
     @Test
@@ -149,7 +149,7 @@ public class StockInvestmentTest
         Date marketDate = dateFormatter.parse( "20140101" );
         double marketPrice = 1.00;
 
-        assertEquals( 0.0, stockInvestment.calculateCashGain( marketDate, marketPrice ) );
+        assertEquals( 0.00, stockInvestment.calculateCashGain( marketDate, marketPrice ) );
     }
 
     @Test
@@ -163,6 +163,6 @@ public class StockInvestmentTest
         Date marketDate = dateFormatter.parse( "20170101" );
         double marketPrice = 1.00;
 
-        assertEquals( 0.0, stockInvestment.calculateCashGain( marketDate, marketPrice ) );
+        assertEquals( 0.00, stockInvestment.calculateCashGain( marketDate, marketPrice ) );
     }
 }
