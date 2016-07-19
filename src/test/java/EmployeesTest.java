@@ -5,9 +5,11 @@ import org.testng.annotations.Test;
  */
 public class EmployeesTest
 {
-    @Test(dataProvider = "ValidInput", dataProviderClass = InputTest.class)
+    @Test(dataProvider = "ValidRows", dataProviderClass = InputTest.class)
     public void whenEmployeesIsAssignedThenNoException( String[][] Input ) throws Exception
     {
-        Employees employee = new Employees();
+        Employees employees = new Employees( Input );
+
+        employees.outputEmployees();
     }
 }

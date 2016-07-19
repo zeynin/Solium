@@ -11,12 +11,22 @@ public class InputTest
 {
     private static String[] input = {"VEST", "001B", "20120101", "1000", "0.45"};
     public final int inputLength = input.length;
+    private static String[][] rows = {
+            {"VEST","001B","20120101","1000","0.45"},
+            {"VEST","002B","20120101","1500","0.45"},
+            {"VEST","002B","20130101","1000","0.50"},
+            {"VEST","001B","20130101","1500","0.50"},
+            {"VEST","003B","20130101","1000","0.50"}
+            };
 
     @DataProvider( name = "ValidInput" )
     public static Object[][] ValidInput()
     {
         return new Object[][] { { input }, };
     }
+
+    @DataProvider( name = "ValidRows" )
+    public static Object[][] ValidRows() { return new Object[][] { { rows } }; }
 
     public String[] InvalidInput( int index )
     {

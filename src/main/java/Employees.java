@@ -1,3 +1,4 @@
+import java.util.Set;
 import java.util.TreeMap;
 
 /**
@@ -11,24 +12,43 @@ public class Employees
     public Employees( String[][] input )
     {
         employees = new TreeMap<String, Employee>();
+        String employeeId;
 
         for (String[] row : input)
         {
-            if( employees.containsKey( row[StockInvestment.Fields.EMPLOYEE.getIndex()] ) )
+            employeeId = row[StockInvestment.Fields.EMPLOYEE.getIndex()];
+
+            if( employees.containsKey( employeeId ) )
             {
                 // Add the stock to the employee
-                Employee employee = employees.get( row[StockInvestment.Fields.EMPLOYEE.getIndex()] );
+                Employee employee = employees.get( employeeId );
                 employee.addStock( row );
             }
             else
             {
-                employees.put( row[StockInvestment.Fields.EMPLOYEE.getIndex()], new Employee( row ) );
+                employees.put( employeeId, new Employee( row ) );
             }
 
-            for( String field : row )
-                System.out.print( field + " " );
+            //for( String field : row )
+            //    System.out.print( field + " " );
 
-            System.out.println();
+            //System.out.println();
         }
+    }
+
+    public TreeMap<String, Employee> getEmployees()
+    {
+        return employees;
+    }
+
+    //@Override
+    //public String toString() {
+    //    return firstName + " " + lastName + " " + salary;
+    //}
+
+    public void outputEmployees()
+    {
+        Set mapset = employees.entrySet();
+        System.out.println( mapset );
     }
 }
