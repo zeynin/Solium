@@ -18,7 +18,7 @@ public class InputTest
         return new Object[][] { { input }, };
     }
 
-    public static String[] InvalidInput( int index )
+    public String[] InvalidInput( int index )
     {
         String[] invalidInput = input.clone();
         invalidInput[index] = "";

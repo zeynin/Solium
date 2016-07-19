@@ -59,7 +59,6 @@ public class StockInvestmentTest
         for( int i = 0; i < inputTest.inputLength; i++ )
         {
             // Inputs each field as "".
-            // Any row with a negative number can be ignored
             StockInvestment stockInvestment = new StockInvestment( inputTest.InvalidInput( i ) );
         }
     }

@@ -3,17 +3,35 @@
  */
 public class Employee
 {
-    public String employeeId = "";
-    public StockInvestment[] stockInvestments = null;
+    private String employeeId = "";
+    private StockInvestment[] stockInvestments = null;
 
     public Employee( String[] record )
     {
-        if( record[1].isEmpty() ) return;
+        if( record[StockInvestment.Fields.EMPLOYEE.getIndex()].isEmpty() ) return;
 
-        StockInvestment stock = new StockInvestment( record );
-        stockInvestments = new StockInvestment[]{ stock };
+        this.stockInvestments = new StockInvestment[]{ new StockInvestment( record ) };
+        this.employeeId = record[StockInvestment.Fields.EMPLOYEE.getIndex()];
+    }
 
-        this.employeeId = record[1];
-        this.stockInvestments = stockInvestments;
+    public String getEmployeeId()
+    {
+        return employeeId;
+    }
+
+    public void setEmployeeId( String employeeId )
+    {
+        this.employeeId = employeeId;
+    }
+
+    public StockInvestment[] getStockInvestments()
+    {
+        return stockInvestments;
+    }
+
+    public void addStock( String[] stock )
+    {
+        int i = stockInvestments.length;
+        this.stockInvestments[i] = new StockInvestment( stock );
     }
 }
