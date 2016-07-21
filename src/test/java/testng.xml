@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<suite name="SoliumTestSuite" parallel="true">
+<suite name="SoliumTestSuite">
     <test name="InputTest" parallel="false">
         <classes>
             <class name="InputTest"/>
